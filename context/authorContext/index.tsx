@@ -1,3 +1,4 @@
+import helper from "@/helper";
 import { Dispatch, useEffect } from "react";
 import { createContext, useContext, useMemo, useReducer } from "react";
 
@@ -10,8 +11,6 @@ interface AuthorAction {
   type: string;
   value: AuthorState;
 }
-const isBrowser: boolean = ((): boolean => typeof window !== "undefined")();
-const keySession = "auth";
 
 const initalState = {
   username: "",
@@ -42,9 +41,10 @@ const AuthorProvider = ({ children }: { children: React.ReactNode }) => {
   const reducer = (state: AuthorState, action: AuthorAction) => {
     switch (action.type) {
       case ACTION_TYPE.LOGIN:
-        sessionStorage.setItem(keySession, JSON.stringify(action.value));
+        helper.setAuthSession(action.value);
         return { ...state, ...action.value };
       case ACTION_TYPE.LOGOUT:
+        helper.clearSession();
         return { ...state, ...initalState };
       case ACTION_TYPE.INIT_SESSIOM:
         return { ...state, ...action.value };
@@ -58,17 +58,16 @@ const AuthorProvider = ({ children }: { children: React.ReactNode }) => {
   const value = useMemo(() => [controller, dispatch], [controller, dispatch]);
 
   useEffect(() => {
-    const valueSession = sessionStorage.getItem(keySession);
+    const valueSession = helper.getAuthSession();
     if (!!valueSession) {
-      const AuthSession = JSON.parse(valueSession);
-      dispatch({
+      (dispatch as Dispatch<AuthorAction>)({
         type: ACTION_TYPE.INIT_SESSIOM,
         value: {
-          username: AuthSession.username,
-          password: AuthSession.password,
+          username: valueSession.username,
+          password: valueSession.password,
         },
       });
-      console.log(AuthSession, "===AuthSession===");
+      console.log(valueSession, "===AuthSession===");
     }
   }, []);
   return (

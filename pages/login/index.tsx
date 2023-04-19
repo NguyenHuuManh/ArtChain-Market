@@ -1,47 +1,70 @@
+import AppField from "@/components/form/AppField";
+import InputField from "@/components/form/InputField";
 import { useAuth } from "@/context/authorContext";
 import { dispatchLogin } from "@/context/authorContext";
+import { Formik } from "formik";
 import { useRouter } from "next/router";
-import React from "react";
-import { Card, FormGroup, Label, Input, Form, CardBody } from "reactstrap";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import {
+  Card,
+  FormGroup,
+  Label,
+  Input,
+  Form,
+  CardBody,
+  Button,
+} from "reactstrap";
 const Login = () => {
   const [controller, dispatch] = useAuth();
   const route = useRouter();
-  const onSubmit = () => {
-    dispatchLogin(dispatch, { username: "0343700317", password: "123aA@" });
+  const onSubmit = (values) => {
+    console.log(values, "===values===");
+    dispatchLogin(dispatch, values);
     route.push("/");
   };
   return (
     // <div className="card">
-    <Card
-      title="Login"
-      style={{ width: "18rem", margin: "auto", marginTop: "1rem" }}
+    <Formik
+      initialValues={{ username: "", password: "" }}
+      onSubmit={(values) => onSubmit(values)}
     >
-      <CardBody>
-        <Form>
-          <FormGroup>
-            <Label for="exampleEmail">Email</Label>
-            <Input
-              type="email"
-              name="email"
-              id="exampleEmail"
-              placeholder="with a placeholder"
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for="examplePassword">Password</Label>
-            <Input
-              type="password"
-              name="password"
-              id="examplePassword"
-              placeholder="password placeholder"
-            />
-          </FormGroup>
-          <FormGroup>
-            <Input type="submit" value={"login"} onClick={onSubmit} />
-          </FormGroup>
-        </Form>
-      </CardBody>
-    </Card>
+      {({ submitForm }) => (
+        <Card
+          title="Login"
+          style={{ width: "18rem", margin: "auto", marginTop: "1rem" }}
+        >
+          <CardBody>
+            <Form>
+              <FormGroup>
+                <AppField
+                  component={InputField}
+                  name="username"
+                  label="Tài khoản"
+                  placeholder="username placeholder"
+                />
+              </FormGroup>
+              <FormGroup>
+                <AppField
+                  component={InputField}
+                  type="password"
+                  name="password"
+                  placeholder="password placeholder"
+                />
+              </FormGroup>
+              <FormGroup>
+                <AppField
+                  name="submit"
+                  component={InputField}
+                  type="submit"
+                  value="Login"
+                  onClick={submitForm}
+                />
+              </FormGroup>
+            </Form>
+          </CardBody>
+        </Card>
+      )}
+    </Formik>
     // </div>
   );
 };

@@ -1,16 +1,18 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/display-name */
 import { useAuth } from "@/context/authorContext";
+import helper from "@/helper";
 import { useRouter } from "next/router";
-import { useEffect, useMemo } from "react";
+import { useEffect, useLayoutEffect } from "react";
 
 const WithAuthor = (Component: any) => {
   return (props: any) => {
     const [controller] = useAuth();
     const router = useRouter();
-    const isAuthor = useMemo(() => controller.username, [controller]);
 
     useEffect(() => {
+      const AUTH_SESSION = helper.getAuthSession();
+      const isAuthor = !!controller.username || AUTH_SESSION;
       if (!isAuthor) {
         router.push("/login");
       }
