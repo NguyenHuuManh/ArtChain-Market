@@ -1,0 +1,207 @@
+.item-container {
+  border-width: 10px;
+  border-color: #ffcc21;
+  border-style: solid;
+  width: 288px;
+  height: 288px;
+  position: relative;
+  margin: auto;
+  margin: 10px;
+}
+
+.item-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #2e2e2e;
+  opacity: 0.8;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  color: #ffcc21;
+}
+
+.item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.menu-container {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.btn-image {
+  background: #ff963c;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  width: 150px;
+  color: #ffff;
+  border-radius: 5px;
+  font-family: Hiragino Kaku Gothic Pro;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 20px;
+  letter-spacing: 0px;
+  text-align: center;
+  margin: auto;
+}
+
+.title-image {
+  font-family: Inter;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0.125px;
+  text-align: center;
+}
+
+.between {
+  justify-content: space-between;
+}
+
+.black-box {
+  background: #414141;
+  min-height: 300px;
+  margin-top: 30px;
+}
+
+.grid-record-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 10px;
+  padding-right: 20px;
+  column-gap: 50px;
+  max-height: 260px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.grid-record-container::-webkit-scrollbar {
+  background: #777777;
+  border-radius: 20px;
+}
+
+.grid-record-container::-webkit-scrollbar-thumb {
+  border: 4px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  border-radius: 20px;
+  background-color: #ffcc21;
+  max-height: 50px;
+}
+
+.grid-record-item {
+  padding: 5px;
+  font-size: 30px;
+  text-align: center;
+  position: relative;
+  border-bottom: 1px;
+  border-color: #777777;
+  border-style: solid;
+}
+
+.title-grid-item {
+  font-family: Hiragino Kaku Gothic Pro;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 22px;
+  letter-spacing: 0.07500000298023224px;
+  text-align: left;
+}
+
+.dotWhite {
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  background: #ffff;
+}
+
+.header-box {
+  max-width: 200px;
+  padding: 20px;
+  color: #ffff;
+}
+
+.grid-diary-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  column-gap: 5px;
+  row-gap: 5px;
+}
+
+.diary-item-container {
+  border-width: 1px;
+  border-style: solid;
+  border-color: gray;
+  height: 231px;
+  padding: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.diary-container {
+  margin-top: 50px;
+}
+
+.diary-content {
+  width: 100%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  background: #fff;
+}
+
+.diary-content::after {
+  content: "...";
+  display: inline;
+}
+
+.btn-body-group {
+  width: 100%;
+  padding: 10px;
+}
+
+.btn-body {
+  margin-right: 10px;
+  width: 60px;
+  border-radius: 20px;
+  background: #ffff;
+}
+
+.btn-body-active {
+  background: #ffcc21;
+}
+
+.record-container {
+  margin: auto;
+  max-width: 66%;
+  padding: 30px 0px;
+}
+
+.menu-record-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media only screen and (max-width: 1024px) {
+  .record-container {
+    max-width: 100%;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .menu-record-container {
+    display: block;
+  }
+  .grid-record-container {
+    grid-template-columns: auto;
+  }
+
+  .grid-diary-container {
+    grid-template-columns: auto;
+  }
+}

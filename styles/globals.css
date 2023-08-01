@@ -1,8 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "./header.css";
+@import "./topPage.css";
+@import "./footer.css";
+@import "./record.css";
+@import "./heath.css";
 
-:root {
+:root  {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -17,11 +22,28 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  /* color: rgb(var(--foreground-rgb)); */
+  color: #ffff;
   /* background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb)); */
+}
+
+.textWhite {
+  color: #ffff;
+}
+.textyellow {
+  color: #ffcc21;
+}
+
+.display_flex {
+  display: flex;
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
 }

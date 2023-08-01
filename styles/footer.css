@@ -1,0 +1,11 @@
+.footer {
+    background: #414141;
+    min-height: 120px;
+    color: #FFFF;
+    margin-top: 80px;
+}
+
+.content {
+    width: 80%;
+    justify-content: space-between;
+}

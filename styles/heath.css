@@ -1,0 +1,113 @@
+.recommend-box {
+  background: #2e2e2e;
+  width: 216px;
+  height: 144px;
+  margin: 3px;
+  padding: 20px;
+}
+
+.title-recommend {
+  color: #ffcc21;
+  text-align: center;
+  margin: auto;
+  font-size: 18px;
+}
+.subtitle-recommend {
+  font-family: Hiragino Kaku Gothic Pro;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 26px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #ffffff;
+  margin: auto;
+}
+
+.divider {
+  border-color: #ffffff;
+  border-bottom-width: 1px;
+  width: 50px;
+  border-style: solid;
+  margin: auto;
+}
+.product-img-card {
+  position: relative;
+}
+
+.product-tag {
+  background: #ffcc21;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  font-family: Inter;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0.15000000596046448px;
+  text-align: left;
+  color: #ffff;
+  padding: 10px;
+}
+.product-titile {
+  font-family: Hiragino Kaku Gothic Pro;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 22px;
+  letter-spacing: 0.07500000298023224px;
+  text-align: left;
+  color: #414141;
+}
+
+.hightlight {
+  color: #ff963c;
+}
+.product-img {
+  width: 100%;
+}
+
+.product-grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  row-gap: 10px;
+  column-gap: 5px;
+}
+.product-grid-item {
+  padding: 3px;
+  font-size: 30px;
+  text-align: center;
+  position: relative;
+}
+
+.heath-container {
+  margin: auto;
+  max-width: 66%;
+  padding: 30px 0px;
+}
+
+.recommend-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media only screen and (max-width: 1024px) {
+  .heath-container {
+    max-width: 100%;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .recommend-container {
+    display: block;
+    margin: auto;
+  }
+
+  .recommend-box {
+    margin: auto;
+    margin-bottom: 10px;
+  }
+
+  .product-grid-container {
+    grid-template-columns: auto;
+  }
+}

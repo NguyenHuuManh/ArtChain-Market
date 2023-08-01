@@ -1,0 +1,115 @@
+.firstBox {
+  background: #2e2e2e;
+  display: flex;
+}
+
+.secondBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hexagon {
+  width: 116px;
+  height: 116px;
+  background: linear-gradient(155.89deg, #ffcc21 8.26%, #ff963c 91.18%);
+  position: relative;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  color: #ffff;
+  margin: 10px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+}
+.grid-item {
+  padding: 3px;
+  font-size: 30px;
+  text-align: center;
+  position: relative;
+}
+
+.tag-item {
+  background: #ffcc21;
+  position: absolute;
+  left: 3px;
+  bottom: 3px;
+  font-family: Inter;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0.15000000596046448px;
+  text-align: left;
+  color: #ffff;
+  padding: 10px;
+}
+
+.btn-linear {
+  background: linear-gradient(32.95deg, #ffcc21 8.75%, #ff963c 86.64%);
+  padding-bottom: 10px;
+  padding-top: 10px;
+  min-width: 200px;
+  color: #ffff;
+  border-radius: 5px;
+}
+
+.circle-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border: 10px solid #ccc;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.circle-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 10px solid #2ecc71;
+  border-radius: 50%;
+  clip: rect(0, 100px, 200px, 0); /* 100px is 50% of 200px (diameter) */
+  transform: rotate(0deg); /* initial rotation is 0 degrees */
+  transform-origin: 50% 50%; /* rotation origin is center */
+}
+
+.top-element {
+  display: "flex";
+  align-items: "center";
+  justify-content: "center";
+  width: 100%;
+}
+
+.memu-wapper {
+  display: flex;
+  width: 50%;
+  justify-content: space-between;
+  padding: 20px 0px;
+}
+
+@media only screen and (max-width: 425px) {
+  .firstBox {
+    display: block;
+  }
+  .memu-wapper {
+    display: grid;
+    grid-template-columns: auto auto;
+    width: unset;
+  }
+
+  .grid-container {
+    /* display: grid; */
+    grid-template-columns: auto;
+  }
+}
+
+.left {
+  flex: 2;
+}
+
+.right {
+  flex: 4;
+}
