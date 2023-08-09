@@ -1,20 +1,44 @@
-import { images } from "@/assets";
-import { dispatchLogout, useAuth } from "@/context/authorContext";
-import Image from "next/image";
+import { dispatchConnect, useWallet, dispatchDisconnect } from "@/context/walletContext";
+import { ethers } from "ethers";
 import Link from "next/link";
-import { memo, useMemo } from "react";
-import { Button } from "reactstrap";
+import { memo, useEffect } from "react";
+import WalletSelect from "../walletSelect";
 
 const Header = () => {
-  const [controller, dispatch] = useAuth();
+  const [controller, dispatch] = useWallet();
+
+  const initWallet = async () => {
+    const provider = await new ethers.BrowserProvider(window?.ethereum);
+    const signer = await provider.getSigner();
+    const status = signer ? 'CONNECTED' : 'NOT_CONNECTED'
+    dispatchConnect(dispatch, { provider, signer, status })
+  }
+
+  const onClickDisconect = async () => {
+    dispatchDisconnect(dispatch)
+  }
+
+  console.log(controller.signer, '====signer===');
+
+  useEffect(() => {
+    window.ethereum.on('accountsChanged', async function (accounts) {
+      const provider = new ethers.BrowserProvider(window?.ethereum);
+      const signer = await provider.getSigner(accounts[0]);
+      const status = signer ? 'CONNECTED' : 'NOT_CONNECTED'
+      dispatchConnect(dispatch, { provider, signer, status })
+    })
+  }, [])
 
   return (
     <div className="header">
-      <Link className="logo-link" href="/"><Image src={images.logo} alt="logo" /></Link>
-      <Link className="item-link" href='/record'><span><Image src={images.icon_memo} alt="logo" />自分の記録</span></Link>
-      <Link className="item-link" href='/heath'><span><Image src={images.icon_challenge} alt="logo" />チャレンジ</span></Link>
-      <Link className="item-link" href='/'><span><Image src={images.icon_info} alt="logo" />お知らせ</span></Link>
-      <div className="item-link"><Image src={images.icon_menu} alt="logo" /></div>
+      <Link className="logo-link" href="/">ART-CHAIN.MARKET</Link>
+      {controller.status == 'CONNECTED' ?
+        <div className="item-link">
+          <WalletSelect />
+          <div><button onClick={onClickDisconect}>Logout</button></div>
+        </div> :
+        <div className="item-link"><button onClick={initWallet}>Connect to wallet</button></div>
+      }
     </div>
   )
 };
