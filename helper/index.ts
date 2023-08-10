@@ -1,4 +1,5 @@
 const AUTH_SESSION_KEY = "auth";
+import { ethers } from "ethers";
 class Helper {
   getAuthSession = () => {
     const sessionJson = sessionStorage.getItem(AUTH_SESSION_KEY);
@@ -14,6 +15,7 @@ class Helper {
   };
 
   clearSession = () => sessionStorage.clear();
+
 }
 
 export default new Helper();

@@ -1,5 +1,5 @@
 import { dispatchConnect, useWallet, dispatchDisconnect } from "@/context/walletContext";
-import { ethers } from "ethers";
+import { ethers, verifyMessage } from "ethers";
 import Link from "next/link";
 import { memo, useEffect } from "react";
 import WalletSelect from "../walletSelect";
@@ -7,26 +7,31 @@ import WalletSelect from "../walletSelect";
 const Header = () => {
   const [controller, dispatch] = useWallet();
 
-  const initWallet = async () => {
+
+  const createConnection = async (address?: string, reConnect?: boolean) => {
     const provider = await new ethers.BrowserProvider(window?.ethereum);
-    const signer = await provider.getSigner();
+    const signer = await provider.getSigner(address);
+    if (!reConnect) {
+      const message = "Request connect from ART-Chain MARKET"
+      const sign = await signer.signMessage(message)
+      const addressVerify = await verifyMessage(message, sign)
+      if (addressVerify !== signer.address) return
+    }
     const status = signer ? 'CONNECTED' : 'NOT_CONNECTED'
-    dispatchConnect(dispatch, { provider, signer, status })
+    dispatchConnect(dispatch, { provider, signer, status });
   }
 
   const onClickDisconect = async () => {
     dispatchDisconnect(dispatch)
   }
 
-  console.log(controller.signer, '====signer===');
-
   useEffect(() => {
     window.ethereum.on('accountsChanged', async function (accounts) {
-      const provider = new ethers.BrowserProvider(window?.ethereum);
-      const signer = await provider.getSigner(accounts[0]);
-      const status = signer ? 'CONNECTED' : 'NOT_CONNECTED'
-      dispatchConnect(dispatch, { provider, signer, status })
+      createConnection(accounts[0]);
     })
+    if (sessionStorage.getItem("Wallet_Connect") == 'true') {
+      createConnection(undefined, true);
+    }
   }, [])
 
   return (
@@ -37,7 +42,7 @@ const Header = () => {
           <WalletSelect />
           <div><button onClick={onClickDisconect}>Logout</button></div>
         </div> :
-        <div className="item-link"><button onClick={initWallet}>Connect to wallet</button></div>
+        <div className="item-link"><button onClick={() => createConnection()}>Connect to wallet</button></div>
       }
     </div>
   )
