@@ -1,11 +1,9 @@
-import { Contract, ethers } from "ethers";
-import { useEffect, useState } from "react";
-import RandomIPFS from '../../contractABI/RandomIpfsNft.json'
 import { useWallet } from "@/context/walletContext";
-import { Button } from "reactstrap";
 import axios from "axios";
-import TreeView from "@/components/tree";
-
+import { Contract } from "ethers";
+import { useState } from "react";
+import { Button } from "reactstrap";
+import RandomIPFS from '../../contractABI/RandomIpfsNft.json';
 const Dashboard = () => {
   const [controller, dispatch] = useWallet();
   const [nfts, setNfts] = useState([]);
@@ -64,54 +62,8 @@ const Dashboard = () => {
     })
   }
 
-  function buildTree(data, parent = null) {
-    const children = data.filter(item => item.path.includes(parent));
-    return children.map(child => ({
-      ...child,
-      children: buildTree(data, child.id)
-    }));
-  }
-
-  const arr = [
-    {
-      id: "1a1f3ce8-1e42-4e8e-b2f9-2ea29e7ccff3",
-      name: "Search",
-      path: []
-    },
-    {
-      id: "1a1f3ce8-1e42-4e8e-b2f9-2ea29e7ccff2",
-      name: "Thomas",
-      path: ['1a1f3ce8-1e42-4e8e-b2f9-2ea29e7ccff3']
-    },
-    {
-      id: "1a1f3ce8-1e42-4e8e-b2f9-2ea29e7ccff1",
-      name: "Robert",
-      path: ['1a1f3ce8-1e42-4e8e-b2f9-2ea29e7ccff3', '1a1f3ce8-1e42-4e8e-b2f9-2ea29e7ccff2']
-    }
-  ];
-  const transformToTree = (data) => {
-    const nodeMap = new Map(data.map(node => [node.id, { ...node, children: [] }]));
-  
-    data.forEach(node => {
-      if (node.path.length > 0) {
-        const parentNode = nodeMap.get(node.path[node.path.length - 1]);
-        if (parentNode) {
-          parentNode?.children.push(nodeMap.get(node.id));
-        }
-      }
-    });
-  
-    const rootNodes = data.filter(node => node.path.length === 0);
-    return rootNodes.map(rootNode => nodeMap.get(rootNode.id));
-  };
-  
-  const tree=transformToTree(arr);
-  console.log(tree,'===tree==');
-  
-
   return (
     <div>
-      {/* <TreeView data={arr} /> */}
       <div>
         <Button onClick={mintNFT}>
           Tạo NFT
