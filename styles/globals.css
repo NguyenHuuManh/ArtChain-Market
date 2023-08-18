@@ -47,3 +47,23 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.wapper_container {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+@media only screen and (max-width: 1024px) {
+  .wapper_container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+}
+
+@media only screen and (max-width: 425px) {
+  .wapper_container {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}

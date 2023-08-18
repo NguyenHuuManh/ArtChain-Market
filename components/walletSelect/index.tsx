@@ -1,5 +1,7 @@
+import { images } from "@/assets";
 import { dispatchConnect, dispatchDisconnect, useWallet } from "@/context/walletContext";
 import { ethers, verifyMessage } from "ethers";
+import Image from "next/image";
 import { ChangeEvent, useEffect, useState } from "react";
 
 const WalletSelect = () => {
@@ -30,16 +32,20 @@ const WalletSelect = () => {
                 dispatchDisconnect(dispatch);
             }
         } catch (error) {
-            console.log(error,'==error===');
-            
+            console.log(error, '==error===');
+
         }
     }
     return (
-        <select value={controller.signer.address} onChange={onChange}>
-            {data.map((address) => (
-                <option key={address} value={address}>{address}</option>
-            ))}
-        </select>
+        <div className="display_flex">
+            <Image src={images.user_circle} width={20} height={20} alt="user" style={{}} />
+            <select value={controller.signer.address} onChange={onChange} style={{ maxWidth: 100, textOverflow: "ellipsis",background:"transparent" }}>
+                {data.map((address) => (
+                    <option key={address} value={address}><span>{address}</span></option>
+                ))}
+            </select>
+        </div>
+
     )
 }
 

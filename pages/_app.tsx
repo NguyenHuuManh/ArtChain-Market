@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <Header />
           <Component {...pageProps} />
           <Footer />
-          <ScollTop />
+          {/* <ScollTop /> */}
         </div>
       </WalletProvider>
     </AuthorProvider>

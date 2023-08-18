@@ -1,9 +1,10 @@
-import { dispatchConnect, useWallet, dispatchDisconnect } from "@/context/walletContext";
+import { dispatchConnect, dispatchDisconnect, useWallet } from "@/context/walletContext";
 import { ethers, verifyMessage } from "ethers";
 import Link from "next/link";
 import { memo, useEffect } from "react";
 import WalletSelect from "../walletSelect";
-import { Alchemy, Network } from "alchemy-sdk";
+import Image from "next/image";
+import { images } from "@/assets";
 
 const Header = () => {
   const [controller, dispatch] = useWallet();
@@ -26,7 +27,7 @@ const Header = () => {
     dispatchDisconnect(dispatch)
   }
 
-  
+
   useEffect(() => {
     window.ethereum.on('accountsChanged', async function (accounts) {
       createConnection(accounts[0]);
@@ -41,10 +42,11 @@ const Header = () => {
     <div className="header">
       <Link className="logo-link" href="/">ART-CHAIN.MARKET</Link>
       {controller.status == 'CONNECTED' ?
-        <div className="item-link">
-          <WalletSelect />
-          <div><button onClick={onClickDisconect}>Logout</button></div>
-        </div> :
+        // <div className="item-link">
+        //   <div><button onClick={onClickDisconect}>Logout</button></div>
+        // </div> 
+        <WalletSelect />
+        :
         <div className="item-link"><button onClick={() => createConnection()}>Connect to wallet</button></div>
       }
     </div>
