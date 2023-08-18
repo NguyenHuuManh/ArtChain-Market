@@ -3,6 +3,7 @@ import { ethers, verifyMessage } from "ethers";
 import Link from "next/link";
 import { memo, useEffect } from "react";
 import WalletSelect from "../walletSelect";
+import { Alchemy, Network } from "alchemy-sdk";
 
 const Header = () => {
   const [controller, dispatch] = useWallet();
@@ -25,6 +26,7 @@ const Header = () => {
     dispatchDisconnect(dispatch)
   }
 
+  
   useEffect(() => {
     window.ethereum.on('accountsChanged', async function (accounts) {
       createConnection(accounts[0]);
@@ -33,6 +35,7 @@ const Header = () => {
       createConnection(undefined, true);
     }
   }, [])
+
 
   return (
     <div className="header">

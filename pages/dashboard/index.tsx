@@ -1,12 +1,14 @@
 import { useWallet } from "@/context/walletContext";
 import axios from "axios";
 import { Contract } from "ethers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "reactstrap";
 import RandomIPFS from '../../contractABI/RandomIpfsNft.json';
+import { Alchemy, Network, OwnedNft } from "alchemy-sdk";
+import Image from "next/image";
 const Dashboard = () => {
   const [controller, dispatch] = useWallet();
-  const [nfts, setNfts] = useState([]);
+  const [nfts, setNfts] = useState<OwnedNft[]>([]);
   let account: string, nftRandomContract: Contract;
 
 
@@ -15,36 +17,25 @@ const Dashboard = () => {
     return await nftRandomContract.balanceOf(account)
   }
 
+  const config = {
+    apiKey: "D12B6vndhYI2p894zMpep-q00rRp8V7w",
+    network: Network.ETH_SEPOLIA,
+  };
+  const alchemy = new Alchemy(config);
+
   const getNFT = async () => {
-    const balance = await getBalance()
-    const nftCount = Number(balance.toString().replace('n'));
-    console.log(nftCount, '===nftCount===');
-    const nftPromises = [];
-
-    for (let i = 0; i < nftCount; i++) {
-      nftPromises.push(nftRandomContract.tokenOfOwnerByIndex(account, i));
-    }
-
-    const nftTokens = await Promise.all(nftPromises);
-
-    const nftInfoPromises = nftTokens.map(async (tokenId) => {
-      const tokenURI = await nftRandomContract.tokenURI(tokenId);
-      const response = await axios.get(tokenURI);
-      return response.data.image; // Assuming the NFT metadata has an 'image' property
-    });
-
-    const nftInfo = await Promise.all(nftInfoPromises);
-    console.log(nftInfo, '==nftInfo==');
+    const nfts = await alchemy.nft.getNftsForOwner(controller.signer.address);
+    // Print NFTs
+    console.log(nfts);
+    setNfts(nfts.ownedNfts);
 
   }
 
-  // useEffect(() => {
-  //   if (controller.status == 'CONNECTED') {
-  //     account = controller.signer.address;
-  //     nftRandomContract = new Contract(RandomIPFS.address, RandomIPFS.abi, controller.signer);
-  //     getNFT();
-  //   }
-  // }, [controller])
+  useEffect(() => {
+    if (controller.status == 'CONNECTED') {
+      getNFT();
+    }
+  }, [controller])
 
   const mintNFT = async () => {
     const randomIpfsNft = new Contract(RandomIPFS.address, RandomIPFS.abi, controller.signer);
@@ -70,6 +61,11 @@ const Dashboard = () => {
         </Button>
       </div>
       <div>Danh sách NFT:</div>
+      <div>
+        {nfts.map((e) => (
+          <Image src={e.media[0].gateway} key={e.tokenId} alt={e.title} width={100} height={100}/>
+        ))}
+      </div>
     </div>
   );
 };
