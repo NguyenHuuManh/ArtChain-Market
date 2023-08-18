@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Button } from "reactstrap";
 import RandomIPFS from '../../RandomIpfsNft.json';
 import Container from "@/components/Container";
+import WithAuthor from "@/hocs/WithAuthor";
 const Dashboard = () => {
   const [controller, dispatch] = useWallet();
   const [nfts, setNfts] = useState<OwnedNft[]>([]);
@@ -81,4 +82,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default WithAuthor(Dashboard);

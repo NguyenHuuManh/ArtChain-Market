@@ -5,9 +5,11 @@ import { memo, useEffect } from "react";
 import WalletSelect from "../walletSelect";
 import Image from "next/image";
 import { images } from "@/assets";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const [controller, dispatch] = useWallet();
+  const router = useRouter()
 
 
   const createConnection = async (address?: string, reConnect?: boolean) => {
@@ -19,12 +21,14 @@ const Header = () => {
       const addressVerify = await verifyMessage(message, sign)
       if (addressVerify !== signer.address) return
     }
-    const status = signer ? 'CONNECTED' : 'NOT_CONNECTED'
+    const status = signer ? 'CONNECTED' : 'NOT_CONNECTED';
     dispatchConnect(dispatch, { provider, signer, status });
+    if (status === 'CONNECTED') router.push('/')
   }
 
   const onClickDisconect = async () => {
-    dispatchDisconnect(dispatch)
+    dispatchDisconnect(dispatch);
+    router.push('/login');
   }
 
 
@@ -42,10 +46,10 @@ const Header = () => {
     <div className="header">
       <Link className="logo-link" href="/">ART-CHAIN.MARKET</Link>
       {controller.status == 'CONNECTED' ?
-        // <div className="item-link">
-        //   <div><button onClick={onClickDisconect}>Logout</button></div>
-        // </div> 
-        <WalletSelect />
+        <div className="item-link">
+          <WalletSelect />
+          <div><button onClick={onClickDisconect}>Logout</button></div>
+        </div>
         :
         <div className="item-link"><button onClick={() => createConnection()}>Connect to wallet</button></div>
       }
