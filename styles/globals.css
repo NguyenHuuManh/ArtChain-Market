@@ -6,7 +6,8 @@
 @import "./footer.css";
 @import "./record.css";
 @import "./heath.css";
-@import "./card.css"
+@import "./card.css";
+@import "./collections.css";
 
 
 :root  {
@@ -45,6 +46,9 @@ body {
 .center {
   justify-content: center;
   align-items: center;
+}
+.flex_between {
+  justify-content: space-between;
 }
 
 .wapper_container {
