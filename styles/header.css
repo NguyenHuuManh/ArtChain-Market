@@ -1,10 +1,15 @@
 .header {
   display: flex;
   align-items: center;
-  /* background: #414141; */
+  background: rgb(10 8 75);
   min-height: 50px;
+  max-height: 100px;
   padding-left: 50px;
   padding-right: 50px;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  justify-content: space-between;
 }
 .header span {
   color: #ffff;
@@ -15,13 +20,13 @@
 }
 
 .logo-link {
-  flex: 5;
-  text-decoration: "none";
+  color: #ffff;
+  text-decoration: none;
 }
 
-.item-link {
-  flex: 1;
-  text-decoration: "none";
+.item-link a {
+  color: #ffff;
+  text-decoration: none;
 }
 
 @media only screen and (max-width: 1024px) {

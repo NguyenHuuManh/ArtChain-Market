@@ -18,11 +18,6 @@ import {
 const Login = () => {
   const [controller, dispatch] = useAuth();
   const route = useRouter();
-  const onSubmit = (values) => {
-    console.log(values, "===values===");
-    dispatchLogin(dispatch, values);
-    route.push("/");
-  };
   return (
     // <Formik
     //   initialValues={{ username: "", password: "" }}
@@ -66,7 +61,7 @@ const Login = () => {
     //   )}
     // </Formik>
     <Container>
-      <div style={{ margin: 'auto' ,fontSize:20,fontWeight:'700'}}>Wellcome to ART-Chain Market</div>
+      <div style={{ margin: 'auto' ,fontSize:20,fontWeight:'700', color:"#FFFF"}}>Wellcome to ART-Chain Market</div>
     </Container>
   );
 };

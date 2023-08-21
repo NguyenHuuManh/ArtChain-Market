@@ -12,18 +12,37 @@
   border-radius: 10px;
   width: 200px;
   margin: auto;
+  overflow: hidden;
+}
+
+.nft_card_container:hover {
+  transform: scale(1.1);
 }
 
 .img_card {
   margin: auto;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  /* height: 'auto'; */
+  /* transition: transform 1s, filter 1s;
+  transform-style: preserve-3d; */
 }
+
+/* .img_card:hover {
+  transform: rotateY(180deg);
+} */
 
 .text_card {
   display: block;
-  text-align: center;
+  /* text-align: center; */
+  font-size: 13px;
+}
+
+.bottom_card {
+  margin-top: 10px;
+  border-top-width: 1px;
+  padding-top: 5px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .title_card {

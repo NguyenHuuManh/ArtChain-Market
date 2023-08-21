@@ -6,6 +6,8 @@
 @import "./footer.css";
 @import "./record.css";
 @import "./heath.css";
+@import "./card.css"
+
 
 :root  {
   --foreground-rgb: 0, 0, 0;
@@ -22,14 +24,7 @@
 }
 
 body {
-  /* color: rgb(var(--foreground-rgb)); */
-  color: #ffff;
-  /* background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
+  background-color: rgb(16 20 57) !important;
 }
 
 .textWhite {
@@ -43,6 +38,10 @@ body {
   display: flex;
 }
 
+.display_block {
+  display: block;
+}
+
 .center {
   justify-content: center;
   align-items: center;
@@ -51,6 +50,8 @@ body {
 .wapper_container {
   padding-left: 50px;
   padding-right: 50px;
+  padding-top: 60px;
+  padding-bottom: 50px;
 }
 
 @media only screen and (max-width: 1024px) {

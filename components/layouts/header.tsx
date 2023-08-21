@@ -1,11 +1,13 @@
-import { dispatchConnect, dispatchDisconnect, useWallet } from "@/context/walletContext";
+import { dispatchConnect, useWallet } from "@/context/walletContext";
 import { ethers, verifyMessage } from "ethers";
 import Link from "next/link";
-import { memo, useEffect } from "react";
-import WalletSelect from "../walletSelect";
-import Image from "next/image";
-import { images } from "@/assets";
 import { useRouter } from "next/router";
+import { memo, useEffect } from "react";
+import { Input } from "reactstrap";
+import WalletSelect from "../walletSelect";
+import LoginIcon from '@mui/icons-material/Login';
+import StoreIcon from '@mui/icons-material/Store';
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 
 const Header = () => {
   const [controller, dispatch] = useWallet();
@@ -26,12 +28,6 @@ const Header = () => {
     if (status === 'CONNECTED') router.push('/')
   }
 
-  const onClickDisconect = async () => {
-    dispatchDisconnect(dispatch);
-    router.push('/login');
-  }
-
-
   useEffect(() => {
     window.ethereum.on('accountsChanged', async function (accounts) {
       createConnection(accounts[0]);
@@ -45,13 +41,22 @@ const Header = () => {
   return (
     <div className="header">
       <Link className="logo-link" href="/">ART-CHAIN.MARKET</Link>
+      <Input
+        className="item-link"
+        placeholder="Search NFT..."
+        style={{ maxWidth: 200 }}
+      />
+      <Link className="logo-link" href="/"><StoreIcon style={{ marginRight: 10 }} />Market place</Link>
+      <Link className="logo-link" href="/"><CollectionsBookmarkIcon style={{ marginRight: 10 }} /> Collections</Link>
       {controller.status == 'CONNECTED' ?
         <div className="item-link">
           <WalletSelect />
-          <div><button onClick={onClickDisconect}>Logout</button></div>
         </div>
         :
-        <div className="item-link"><button onClick={() => createConnection()}>Connect to wallet</button></div>
+        <div className="item-link logo-link"><button onClick={() => createConnection()}>
+          <LoginIcon style={{ marginRight: 10 }} />
+          Connect to wallet
+        </button></div>
       }
     </div>
   )
