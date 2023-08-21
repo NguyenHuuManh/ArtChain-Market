@@ -47,7 +47,7 @@ const Header = () => {
         style={{ maxWidth: 200 }}
       />
       <Link className="logo-link" href="/"><StoreIcon style={{ marginRight: 10 }} />Market place</Link>
-      <Link className="logo-link" href="/"><CollectionsBookmarkIcon style={{ marginRight: 10 }} /> Collections</Link>
+      <Link className="logo-link" href="/collections"><CollectionsBookmarkIcon style={{ marginRight: 10 }} /> Collections</Link>
       {controller.status == 'CONNECTED' ?
         <div className="item-link">
           <WalletSelect />

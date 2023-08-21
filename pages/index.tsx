@@ -4,14 +4,15 @@ import WithAuthor from "@/hocs/WithAuthor";
 import alchemy from "@/services/AlchemyService";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import StorefrontIcon from '@mui/icons-material/Storefront';
-import { Alchemy, Network, OwnedNft } from "alchemy-sdk";
+import { Alchemy, Network, Nft, OwnedNft } from "alchemy-sdk";
 import { Contract } from "ethers";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import contractABI from '@/contractABI/RandomIpfsNft.json'
 const Dashboard = () => {
   const [controller, dispatch] = useWallet();
-  const [nfts, setNfts] = useState<OwnedNft[]>([]);
+  const [nfts, setNfts] = useState<Nft[]>([]);
   let account: string, nftRandomContract: Contract;
   const router = useRouter();
 
@@ -23,18 +24,16 @@ const Dashboard = () => {
 
 
   const getNFT = async () => {
-    const nfts = await alchemy.nft.getNftsForOwner(controller.signer.address);
+    const nfts = await alchemy.nft.getNftsForContract(contractABI.address);
     // Print NFTs
     console.log(nfts);
-    setNfts(nfts.ownedNfts);
+    setNfts(nfts.nfts);
 
   }
 
   useEffect(() => {
-    if (controller.status == 'CONNECTED') {
-      getNFT();
-    }
-  }, [controller])
+    getNFT()
+  }, [])
 
   const categories = [
     { id: 1, type: 'nomal' },
@@ -79,129 +78,9 @@ const Dashboard = () => {
             </div>
           </div>
         ))}
-        {nfts.map((e) => (
-          <div className="nft_card_container" key={e.tokenId}>
-            <Image
-              src={e.media[0].gateway}
-              key={e.tokenId}
-              alt={e.title}
-              width={200}
-              height={200}
-              className="img_card"
-              loading="lazy"
-            />
-            <div style={{ padding: 10 }}>
-              <span className="text_card title_card">{e.title}</span>
-              <span className="text_card">{e.description}</span>
-              <div className="bottom_card">
-                <span className="text_card">
-                  <StorefrontIcon fontSize="small" style={{ marginRight: 5 }} />
-                  list for sale
-                </span>
-                <MoreVertIcon fontSize="small" />
-              </div>
-            </div>
-          </div>
-        ))}
-        {nfts.map((e) => (
-          <div className="nft_card_container" key={e.tokenId}>
-            <Image
-              src={e.media[0].gateway}
-              key={e.tokenId}
-              alt={e.title}
-              width={200}
-              height={200}
-              className="img_card"
-              loading="lazy"
-            />
-            <div style={{ padding: 10 }}>
-              <span className="text_card title_card">{e.title}</span>
-              <span className="text_card">{e.description}</span>
-              <div className="bottom_card">
-                <span className="text_card">
-                  <StorefrontIcon fontSize="small" style={{ marginRight: 5 }} />
-                  list for sale
-                </span>
-                <MoreVertIcon fontSize="small" />
-              </div>
-            </div>
-          </div>
-        ))}
-        {nfts.map((e) => (
-          <div className="nft_card_container" key={e.tokenId}>
-            <Image
-              src={e.media[0].gateway}
-              key={e.tokenId}
-              alt={e.title}
-              width={200}
-              height={200}
-              className="img_card"
-              loading="lazy"
-            />
-            <div style={{ padding: 10 }}>
-              <span className="text_card title_card">{e.title}</span>
-              <span className="text_card">{e.description}</span>
-              <div className="bottom_card">
-                <span className="text_card">
-                  <StorefrontIcon fontSize="small" style={{ marginRight: 5 }} />
-                  list for sale
-                </span>
-                <MoreVertIcon fontSize="small" />
-              </div>
-            </div>
-          </div>
-        ))}
-        {nfts.map((e) => (
-          <div className="nft_card_container" key={e.tokenId}>
-            <Image
-              src={e.media[0].gateway}
-              key={e.tokenId}
-              alt={e.title}
-              width={200}
-              height={200}
-              className="img_card"
-              loading="lazy"
-            />
-            <div style={{ padding: 10 }}>
-              <span className="text_card title_card">{e.title}</span>
-              <span className="text_card">{e.description}</span>
-              <div className="bottom_card">
-                <span className="text_card">
-                  <StorefrontIcon fontSize="small" style={{ marginRight: 5 }} />
-                  list for sale
-                </span>
-                <MoreVertIcon fontSize="small" />
-              </div>
-            </div>
-          </div>
-        ))}
-        {nfts.map((e) => (
-          <div className="nft_card_container" key={e.tokenId}>
-            <Image
-              src={e.media[0].gateway}
-              key={e.tokenId}
-              alt={e.title}
-              width={200}
-              height={200}
-              className="img_card"
-              loading="lazy"
-            />
-            <div style={{ padding: 10 }}>
-              <span className="text_card title_card">{e.title}</span>
-              <span className="text_card">{e.description}</span>
-              <div className="bottom_card">
-                <span className="text_card">
-                  <StorefrontIcon fontSize="small" style={{ marginRight: 5 }} />
-                  list for sale
-                </span>
-                <MoreVertIcon fontSize="small" />
-              </div>
-            </div>
-          </div>
-        ))}
       </div>
     </Container>
   );
 };
 
-export default WithAuthor(Dashboard);
+export default Dashboard;
