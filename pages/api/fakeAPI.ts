@@ -226,65 +226,6 @@ const recommendList: recommendI[] = [
   },
 ];
 
-const products: productI[] = [
-  {
-    id: 1,
-    description: "魚を食べて頭もカラダも元気に！知っておきたい魚を食べるメリ…",
-    title: "#魚料理  #和食  #DHA",
-    image: images.column1,
-    time: "2021.05.17   23:25",
-  },
-  {
-    id: 2,
-    description: "魚を食べて頭もカラダも元気に！知っておきたい魚を食べるメリ…",
-    title: "#魚料理  #和食  #DHA",
-    image: images.column2,
-    time: "2021.05.17   23:25",
-  },
-  {
-    id: 3,
-    description: "魚を食べて頭もカラダも元気に！知っておきたい魚を食べるメリ…",
-    title: "#魚料理  #和食  #DHA",
-    image: images.column3,
-    time: "2021.05.17   23:25",
-  },
-  {
-    id: 4,
-    description: "魚を食べて頭もカラダも元気に！知っておきたい魚を食べるメリ…",
-    title: "#魚料理  #和食  #DHA",
-    image: images.column4,
-    time: "2021.05.17   23:25",
-  },
-  {
-    id: 5,
-    description: "魚を食べて頭もカラダも元気に！知っておきたい魚を食べるメリ…",
-    title: "#魚料理  #和食  #DHA",
-    image: images.column5,
-    time: "2021.05.17   23:25",
-  },
-  {
-    id: 6,
-    description: "魚を食べて頭もカラダも元気に！知っておきたい魚を食べるメリ…",
-    title: "#魚料理  #和食  #DHA",
-    image: images.column6,
-    time: "2021.05.17   23:25",
-  },
-  {
-    id: 7,
-    description: "魚を食べて頭もカラダも元気に！知っておきたい魚を食べるメリ…",
-    title: "#魚料理  #和食  #DHA",
-    image: images.column7,
-    time: "2021.05.17   23:25",
-  },
-  {
-    id: 8,
-    description: "魚を食べて頭もカラダも元気に！知っておきたい魚を食べるメリ…",
-    title: "#魚料理  #和食  #DHA",
-    image: images.column8,
-    time: "2021.05.17   23:25",
-  },
-];
-
 export function getMenuRecord(): Promise<menuI[]> {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -317,10 +258,3 @@ export function getRecommendHeath(): Promise<recommendI[]> {
   });
 }
 
-export function getProductHeath(): Promise<productI[]> {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(products);
-    }, 100);
-  });
-}

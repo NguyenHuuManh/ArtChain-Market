@@ -1,6 +1,5 @@
 import Container from "@/components/Container";
 import contractABI from '@/contractABI/RandomIpfsNft.json';
-import WithAuthor from "@/hocs/WithAuthor";
 import alchemy from "@/services/AlchemyService";
 import { Box } from "@mui/material";
 import { Nft } from "alchemy-sdk";
