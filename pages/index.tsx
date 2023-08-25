@@ -68,13 +68,13 @@ const Dashboard = () => {
             <div style={{ padding: 10 }}>
               <span className="text_card title_card">{e.title}</span>
               <span className="text_card">{e.description}</span>
-              <div className="bottom_card">
+              {/* <div className="bottom_card">
                 <span className="text_card">
                   <StorefrontIcon fontSize="small" style={{ marginRight: 5 }} />
                   list for sale
                 </span>
                 <MoreVertIcon fontSize="small" />
-              </div>
+              </div> */}
             </div>
           </div>
         ))}

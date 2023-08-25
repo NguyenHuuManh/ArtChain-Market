@@ -4,8 +4,7 @@ import WithAuthor from "@/hocs/WithAuthor";
 import alchemy from "@/services/AlchemyService";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import StorefrontIcon from '@mui/icons-material/Storefront';
-import { Box, Button, Modal, Typography } from "@mui/material";
-import { Alchemy, Network, OwnedNft } from "alchemy-sdk";
+import { OwnedNft } from "alchemy-sdk";
 import { Contract } from "ethers";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -90,30 +89,6 @@ const Collections = () => {
                                     <StorefrontIcon fontSize="small" style={{ marginRight: 5 }} />
                                     list for sale
                                 </button>
-                                <MoreVertIcon fontSize="small" />
-                            </div>
-                        </div>
-                    </div>
-                ))}
-                {nfts.map((e) => (
-                    <div className="nft_card_container" key={e.tokenId}>
-                        <Image
-                            src={e.media[0].gateway}
-                            key={e.tokenId}
-                            alt={e.title}
-                            width={200}
-                            height={200}
-                            className="img_card"
-                            loading="lazy"
-                        />
-                        <div style={{ padding: 10 }}>
-                            <span className="text_card title_card">{e.title}</span>
-                            <span className="text_card">{e.description}</span>
-                            <div className="bottom_card">
-                                <span className="text_card">
-                                    <StorefrontIcon fontSize="small" style={{ marginRight: 5 }} />
-                                    list for sale
-                                </span>
                                 <MoreVertIcon fontSize="small" />
                             </div>
                         </div>

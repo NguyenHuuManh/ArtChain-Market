@@ -11,6 +11,7 @@
   -moz-box-shadow: 7px 8px 7px 0px rgba(0,0,0,0.56);
   border-radius: 10px;
   width: 200px;
+  height:auto;
   margin: auto;
   overflow: hidden;
 }
@@ -23,6 +24,7 @@
   margin: auto;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  height: 300px;
   /* transition: transform 1s, filter 1s;
   transform-style: preserve-3d; */
 }
