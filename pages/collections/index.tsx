@@ -10,6 +10,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ModalListForSale from "./components/ModalListForSale";
+import nftContractABI from '../../contractABI/RandomIpfsNft.json'
+import AddNFT from "@/components/layouts/AddNFT";
 const Collections = () => {
     const [controller, dispatch] = useWallet();
     const [nfts, setNfts] = useState<OwnedNft[]>([]);
@@ -26,7 +28,7 @@ const Collections = () => {
 
 
     const getNFT = async () => {
-        const nfts = await alchemy.nft.getNftsForOwner(controller.signer.address);
+        const nfts = await alchemy.nft.getNftsForOwner(controller.signer.address, { contractAddresses: [nftContractABI.address] });
         // Print NFTs
         console.log(nfts);
         setNfts(nfts.ownedNfts);
@@ -63,6 +65,7 @@ const Collections = () => {
 
     return (
         <Container>
+            <AddNFT onSuccess={getNFT} />
             <div className="display_flex center" style={{ marginBottom: 30, marginTop: 30 }}>{categories.map((e) => (
                 <div key={e.id} className="display_flex center" style={{ width: 100, borderRadius: 10, background: "#FFFF", marginRight: 20 }}>{e.type}</div>
             ))}</div>

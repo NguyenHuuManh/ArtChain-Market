@@ -10,6 +10,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import contractABI from '@/contractABI/RandomIpfsNft.json'
+import AddNFT from "@/components/layouts/AddNFT";
 const Dashboard = () => {
   const [controller, dispatch] = useWallet();
   const [nfts, setNfts] = useState<Nft[]>([]);

@@ -18,7 +18,6 @@ export default function App({ Component, pageProps }: AppProps) {
     <AuthorProvider>
       <WalletProvider>
         <div style={{ position: 'relative' }}>
-          <AddNFT />
           <Header />
           <Component {...pageProps} />
           {/* <Footer /> */}
