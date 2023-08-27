@@ -3,7 +3,7 @@ import { dispatchConnect, useWallet } from "@/context/walletContext";
 import { ethers, verifyMessage } from "ethers";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { Input } from "reactstrap";
 import WalletSelect from "../walletSelect";
 import LoginIcon from '@mui/icons-material/Login';
@@ -12,6 +12,8 @@ import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import { Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper } from "@mui/material";
 import { Menu } from "@mui/icons-material";
 import MenuIcon from '@mui/icons-material/Menu';
+import { Spinner } from 'reactstrap';
+
 
 const Header = () => {
   const [controller, dispatch] = useWallet();
@@ -19,28 +21,40 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef<HTMLButtonElement>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [isInstalled, setIsInStalled] = useState(false);
+  const [loading, setLoading] = useState(false);
   const routerName = router.pathname;
-  console.log(routerName, '====routerName===');
 
 
   const createConnection = async (address?: string, reConnect?: boolean) => {
-    const provider = await new ethers.BrowserProvider(window?.ethereum);
-    const signer = await provider.getSigner(address);
-    if (!reConnect) {
-      const message = "Request connect from ART-Chain MARKET"
-      const sign = await signer.signMessage(message)
-      const addressVerify = await verifyMessage(message, sign)
-      if (addressVerify !== signer.address) return
+    try {
+      setLoading(true)
+      const provider = await new ethers.BrowserProvider(window?.ethereum);
+      const signer = await provider.getSigner(address);
+      if (!reConnect) {
+        const message = "Request connect from ART-Chain MARKET"
+        const sign = await signer.signMessage(message)
+        const addressVerify = await verifyMessage(message, sign)
+        if (addressVerify !== signer.address) return
+      }
+      const status = signer ? 'CONNECTED' : 'NOT_CONNECTED';
+      dispatchConnect(dispatch, { provider, signer, status });
+      setLoading(false)
+      return status;
+    } catch (error) {
+      setLoading(false)
+      return error
     }
-    const status = signer ? 'CONNECTED' : 'NOT_CONNECTED';
-    dispatchConnect(dispatch, { provider, signer, status });
-    return status;
   }
 
   useEffect(() => {
-    window.ethereum.on('accountsChanged', async function (accounts) {
-      createConnection(accounts[0]);
-    })
+    if (window.ethereum) {
+      window.ethereum?.on('accountsChanged', async function (accounts) {
+        createConnection(accounts[0]);
+      })
+      setIsInStalled(true)
+    }
+
     if (sessionStorage.getItem("Wallet_Connect") == 'true') {
       createConnection(undefined, true);
     }
@@ -87,6 +101,39 @@ const Header = () => {
     { path: '/collections', name: "Collections", icon: <CollectionsBookmarkIcon /> },
   ]
 
+  const buttonMetaMask = useMemo(() => {
+    if (loading) {
+      return (
+        <div className="item-link logo-link center">
+          <Spinner style={{ marginRight: 10 }} size="sm" />
+          Connecting...
+        </div>
+      )
+    }
+    if (controller.status == 'CONNECTED') {
+      return (
+        <div className="item-link">
+          <WalletSelect />
+        </div>
+      )
+    }
+    
+    if (isInstalled) {
+      return <div className="item-link logo-link">
+        <button onClick={() => createConnection().then((res) => {
+          if (res === "CONNECTED") router.push('/');
+        })}>
+          <LoginIcon style={{ marginRight: 10 }} />
+          Connect to wallet
+        </button></div>
+    }
+    
+    return <div className="item-link logo-link"><button onClick={() => { window.open('https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=vi') }}>
+      <LoginIcon style={{ marginRight: 10 }} />
+      Install Wallet
+    </button></div>
+  }, [controller, isInstalled, loading])
+
   return (
     <div className="header">
       {isMobile ? (
@@ -122,19 +169,7 @@ const Header = () => {
             </Link>)}
         </>
       )}
-
-      {controller.status == 'CONNECTED' ?
-        <div className="item-link">
-          <WalletSelect />
-        </div>
-        :
-        <div className="item-link logo-link"><button onClick={() => createConnection().then((res) => {
-          if (res === "CONNECTED") router.push('/');
-        })}>
-          <LoginIcon style={{ marginRight: 10 }} />
-          Connect to wallet
-        </button></div>
-      }
+      {buttonMetaMask}
       <Popper
         open={open}
         anchorEl={anchorRef.current}

@@ -1,24 +1,18 @@
 import Container from "@/components/Container";
 import { useWallet } from "@/context/walletContext";
-import WithAuthor from "@/hocs/WithAuthor";
+import contractABI from '@/contractABI/RandomIpfsNft.json';
 import alchemy from "@/services/AlchemyService";
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import StorefrontIcon from '@mui/icons-material/Storefront';
-import { Alchemy, Network, Nft, OwnedNft } from "alchemy-sdk";
+import { Nft } from "alchemy-sdk";
 import { Contract } from "ethers";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import contractABI from '@/contractABI/RandomIpfsNft.json'
-import AddNFT from "@/components/layouts/AddNFT";
 const Dashboard = () => {
   const [controller, dispatch] = useWallet();
   const [nfts, setNfts] = useState<Nft[]>([]);
   let account: string, nftRandomContract: Contract;
   const router = useRouter();
 
-
-  console.log(controller, '==controller===');
   const getBalance = async () => {
     return await nftRandomContract.balanceOf(account)
   }
