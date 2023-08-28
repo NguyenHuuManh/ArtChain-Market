@@ -1,18 +1,16 @@
 /* eslint-disable react/jsx-key */
 import { dispatchConnect, useWallet } from "@/context/walletContext";
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
+import LoginIcon from '@mui/icons-material/Login';
+import MenuIcon from '@mui/icons-material/Menu';
+import StoreIcon from '@mui/icons-material/Store';
+import { Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper } from "@mui/material";
 import { ethers, verifyMessage } from "ethers";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { Input } from "reactstrap";
 import WalletSelect from "../walletSelect";
-import LoginIcon from '@mui/icons-material/Login';
-import StoreIcon from '@mui/icons-material/Store';
-import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
-import { Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper } from "@mui/material";
-import { Menu } from "@mui/icons-material";
-import MenuIcon from '@mui/icons-material/Menu';
-import { Spinner } from 'reactstrap';
 
 
 const Header = () => {
@@ -21,14 +19,11 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef<HTMLButtonElement>(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [isInstalled, setIsInStalled] = useState(false);
-  const [loading, setLoading] = useState(false);
   const routerName = router.pathname;
 
 
   const createConnection = async (address?: string, reConnect?: boolean) => {
     try {
-      setLoading(true)
       const provider = await new ethers.BrowserProvider(window?.ethereum);
       const signer = await provider.getSigner(address);
       if (!reConnect) {
@@ -39,10 +34,8 @@ const Header = () => {
       }
       const status = signer ? 'CONNECTED' : 'NOT_CONNECTED';
       dispatchConnect(dispatch, { provider, signer, status });
-      setLoading(false)
       return status;
     } catch (error) {
-      setLoading(false)
       return error
     }
   }
@@ -52,7 +45,6 @@ const Header = () => {
       window.ethereum?.on('accountsChanged', async function (accounts) {
         createConnection(accounts[0]);
       })
-      setIsInStalled(true)
     }
 
     if (sessionStorage.getItem("Wallet_Connect") == 'true') {
@@ -102,14 +94,6 @@ const Header = () => {
   ]
 
   const buttonMetaMask = useMemo(() => {
-    if (loading) {
-      return (
-        <div className="item-link logo-link center">
-          <Spinner style={{ marginRight: 10 }} size="sm" />
-          Connecting...
-        </div>
-      )
-    }
     if (controller.status == 'CONNECTED') {
       return (
         <div className="item-link">
@@ -117,22 +101,12 @@ const Header = () => {
         </div>
       )
     }
-    
-    if (isInstalled) {
-      return <div className="item-link logo-link">
-        <button onClick={() => createConnection().then((res) => {
-          if (res === "CONNECTED") router.push('/');
-        })}>
-          <LoginIcon style={{ marginRight: 10 }} />
-          Connect to wallet
-        </button></div>
-    }
-    
-    return <div className="item-link logo-link"><button onClick={() => { window.open('https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=vi') }}>
-      <LoginIcon style={{ marginRight: 10 }} />
-      Install Wallet
-    </button></div>
-  }, [controller, isInstalled, loading])
+    return <div className="item-link logo-link">
+      <button onClick={() => router.push('/login')}>
+        <LoginIcon style={{ marginRight: 10 }} />
+        Connect to wallet
+      </button></div>
+  }, [controller])
 
   return (
     <div className="header">
